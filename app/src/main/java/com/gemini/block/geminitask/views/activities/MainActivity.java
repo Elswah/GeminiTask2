@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNews(String title) {
+        p.setIndeterminate(true);
+        p.setVisibility(View.VISIBLE);
         HashMap<String, String> filterMap = new HashMap<>();
         filterMap.put("q", title);
         filterMap.put("apiKey", Constants.token);
@@ -124,9 +126,12 @@ public class MainActivity extends AppCompatActivity {
                     p.setIndeterminate(false);
                     p.setVisibility(View.GONE);
                 }else {
-                    Toast.makeText(this, "No Data to Fetch", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "No Data with this input", Toast.LENGTH_SHORT).show();
                     p.setVisibility(View.GONE);
                     p.setIndeterminate(false);
+                    //get this value as default
+                    getNews("bitcoin");
+
                 }
             }else {
                 // error case
@@ -154,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         p.setIndeterminate(true);
         Util.setFont(tvNoInternet, this, 0);
+
     }
 
     @Override
@@ -187,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText titleInput = new EditText(MainActivity.this);
         titleInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        titleInput.setHint("bitcoin");
+        titleInput.setHint("enter key word to filter like (bitcoin)");
         builder.setView(titleInput);
 
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
@@ -197,10 +203,12 @@ public class MainActivity extends AppCompatActivity {
                 titlePreference.setTitle(titleInput.getText().toString());
 
                 String title = titlePreference.getTitle();
-
-
-                //re-render everything again
-                getNews(title);
+                if (title.equals("") && title.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "enter your field correctly", Toast.LENGTH_SHORT).show();
+                } else {
+                    //re-render everything again
+                    getNews(title);
+                }
 
             }
         });
