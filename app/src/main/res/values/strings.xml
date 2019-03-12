@@ -3,4 +3,5 @@
     <string name="title">title</string>
     <string name="description">description</string>
     <string name="thumbnail">description</string>
+    <string name="no_internet_connection">NO Internet Connection !</string>
 </resources>

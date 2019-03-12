@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.gemini.block.geminitask.R;
 import com.gemini.block.geminitask.adapter.RecyclerAdapter;
@@ -12,10 +14,12 @@ import com.gemini.block.geminitask.model.New;
 import com.gemini.block.geminitask.service.NewsService;
 import com.gemini.block.geminitask.service.ServiceBuilder;
 import com.gemini.block.geminitask.utils.Constants;
+import com.gemini.block.geminitask.utils.Util;
 
 import java.util.HashMap;
 import java.util.Locale;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import retrofit2.Call;
@@ -25,6 +29,13 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     private Unbinder unbinder;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.p)
+    ProgressBar p;
+    @BindView(R.id.nointernet)
+    TextView tvNoInternet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
        request.enqueue(new Callback<New>() {
            @Override
            public void onResponse(Call<New> call, Response<New> response) {
-               Timber.d(response.toString());
+               //Timber.d(response.toString());
+               RecyclerAdapter adapter = new RecyclerAdapter(getApplicationContext(), response.body().getArticles());
+               recyclerView.setAdapter(adapter);
 
            }
 
@@ -51,15 +64,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setUpRecyclerView() {
         unbinder = ButterKnife.bind(this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        //RecyclerAdapter adapter = new RecyclerAdapter(this, Landscape.getData());
-       // recyclerView.setAdapter(adapter);
-
-        LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this); // (Context context, int spanCount)
+        // (Context context, int spanCount)
+        LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this);
         mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
-
-        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Even if we dont use it then also our items shows default animation. #Check Docs
+        // Even if we dont use it then also our items shows default animation. #Check Docs
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        p.setIndeterminate(true);
+        Util.setFont(tvNoInternet, this, 0);
     }
 
     @Override

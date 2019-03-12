@@ -36,6 +36,7 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="7dp"
 				android:text="@string/title"
+				android:maxLines="1"
 				android:textColor="#616161"
 				android:textSize="18sp"
 				android:textStyle="bold" />
@@ -45,6 +46,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="10dp"
+				android:maxLines="1"
 				android:text="@string/description"
 				android:textSize="15sp"
 				android:textStyle="italic" />
@@ -52,24 +54,21 @@
 		</LinearLayout>
 
 
-		<RelativeLayout
+		<LinearLayout
 			android:layout_width="wrap_content"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:gravity="center_vertical"
+			>
 
 			<ImageView
 				android:id="@+id/img_row_select"
-				android:layout_width="20dp"
-				android:layout_height="50dp"
-				android:layout_gravity="center"
-				android:layout_marginBottom="7dp"
-				android:layout_marginEnd="7dp"
-				android:layout_marginLeft="7dp"
-				android:layout_marginRight="7dp"
-				android:layout_marginStart="7dp"
-				android:layout_marginTop="7dp"
+				android:layout_width="30dp"
+				android:layout_height="35dp"
+				android:layout_gravity="center_vertical"
 				android:scaleType="fitXY"
-				android:src="@drawable/arrowgo" />
-		</RelativeLayout>
+				android:background="@drawable/arraw_hover" />
+		</LinearLayout>
 
 
 	</LinearLayout>
