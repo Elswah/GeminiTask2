@@ -1,10 +1,10 @@
 package com.gemini.block.geminitask.views;
 
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,16 +15,13 @@ import android.widget.Toast;
 
 import com.gemini.block.geminitask.R;
 import com.gemini.block.geminitask.adapter.RecyclerAdapter;
-import com.gemini.block.geminitask.model.Article;
 import com.gemini.block.geminitask.model.New;
 import com.gemini.block.geminitask.service.NewsService;
 import com.gemini.block.geminitask.service.ServiceBuilder;
 import com.gemini.block.geminitask.utils.Constants;
 import com.gemini.block.geminitask.utils.Util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +34,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private Snackbar snackbar;
-    private ArrayList<Article> articles = new ArrayList<>();
+    //private ArrayList<Article> articles = new ArrayList<>();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.p)
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getNews(){
         //clear data first
-        articles.clear();
+        //  articles.clear();
         HashMap<String, String> filterMap = new HashMap<>();
         filterMap.put("q", "+");
         filterMap.put("apiKey", Constants.token);
