@@ -3,5 +3,6 @@
     <color name="colorPrimary">#007dc3</color>
     <color name="colorPrimaryDark">#0069a3</color>
     <color name="colorAccent">#007dc3</color>
+    <color name="snackBarActionTxtColor">#00796B</color>
 
 </resources>
