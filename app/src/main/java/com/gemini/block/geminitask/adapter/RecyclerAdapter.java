@@ -1,16 +1,20 @@
 package com.gemini.block.geminitask.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gemini.block.geminitask.R;
 import com.gemini.block.geminitask.model.Article;
+import com.gemini.block.geminitask.utils.RoundedCornersTransformation;
+import com.gemini.block.geminitask.views.activities.DetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -56,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView title,description;
         ImageView imgHeader, imgSelect;
+        LinearLayout linearLayout;
         int position;
         Article current;
 
@@ -65,6 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             description = (TextView)  itemView.findViewById(R.id.tvDescription);
             imgHeader   = (ImageView) itemView.findViewById(R.id.img_row);
             imgSelect   = (ImageView) itemView.findViewById(R.id.img_row_select);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.layout);
 
         }
 
@@ -72,13 +78,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.title.setText(current.getAuthor());
             this.description.setText(current.getSource().getName());
             Picasso.with(context).load(current.getUrlToImage()).error(R.drawable.error)
-                    .placeholder(R.drawable.placeholder).into(this.imgHeader);
+                    .placeholder(R.drawable.placeholder).transform(new RoundedCornersTransformation(22, 0))
+                    .fit().centerCrop().into(this.imgHeader);
             this.position = position;
             this.current = current;
         }
         public void setListeners() {
             imgSelect.setOnClickListener(MyViewHolder.this);
             imgHeader.setOnClickListener(MyViewHolder.this);
+            linearLayout.setOnClickListener(this);
 
 
         }
@@ -88,11 +96,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             switch (view.getId()) {
                 case R.id.img_row_select:
                     Timber.d("img_row_select ");
-
                     break;
 
                 case R.id.img_row:
                     Timber.d("img_row ");
+                    break;
+                case R.id.layout:
+                    Timber.d("layout clicked ");
+                    Intent intent = new Intent(context, DetailsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("currentitem", current);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                     break;
             }
          //   Log.i("onClick after operation", mData.size() + " \n\n" + mData.toString());

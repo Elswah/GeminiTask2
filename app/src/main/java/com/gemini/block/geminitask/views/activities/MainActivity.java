@@ -1,4 +1,4 @@
-package com.gemini.block.geminitask.views;
+package com.gemini.block.geminitask.views.activities;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -34,7 +34,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private Snackbar snackbar;
-    //private ArrayList<Article> articles = new ArrayList<>();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.p)
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         p.setIndeterminate(false);
         p.setVisibility(View.GONE);
         tvNoInternet.setVisibility(View.VISIBLE);
-
         snackbar = Snackbar.make(constraintLayout, "No Internet Connection !", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Retry", new View.OnClickListener() {
                     @Override
@@ -83,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
     }
     private void getNews(){
-        //clear data first
-        //  articles.clear();
         HashMap<String, String> filterMap = new HashMap<>();
-        filterMap.put("q", "+");
+        filterMap.put("q", "bitcoin");
         filterMap.put("apiKey", Constants.token);
         NewsService newsService = ServiceBuilder.buildService(NewsService.class);
         Call<New> request = newsService.getNews(filterMap);
