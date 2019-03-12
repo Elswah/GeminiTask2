@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.gemini.block.geminitask.R;
 import com.gemini.block.geminitask.adapter.RecyclerAdapter;
+import com.gemini.block.geminitask.model.Article;
 import com.gemini.block.geminitask.model.New;
 import com.gemini.block.geminitask.service.NewsService;
 import com.gemini.block.geminitask.service.ServiceBuilder;
@@ -28,6 +29,7 @@ import com.gemini.block.geminitask.utils.Constants;
 import com.gemini.block.geminitask.utils.Prefs;
 import com.gemini.block.geminitask.utils.Util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private Snackbar snackbar;
     private String title;
+    private ArrayList<Article> articlesList = new ArrayList<>();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.p)
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNews(String title) {
+        articlesList.clear();
         p.setIndeterminate(true);
         p.setVisibility(View.VISIBLE);
         HashMap<String, String> filterMap = new HashMap<>();
@@ -121,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
         if(response!=null ) {
             if(response.isSuccessful()) {
                 if(response.body().getStatus().equals("ok")&& response.body().getTotalResults()>0) {
-                    //articles= (ArrayList<Article>) response.body().getArticles();
-                    RecyclerAdapter adapter = new RecyclerAdapter(getApplicationContext(),  response.body().getArticles());
+                    articlesList = (ArrayList<Article>) response.body().getArticles();
+                    RecyclerAdapter adapter = new RecyclerAdapter(getApplicationContext(), articlesList);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     p.setIndeterminate(false);
