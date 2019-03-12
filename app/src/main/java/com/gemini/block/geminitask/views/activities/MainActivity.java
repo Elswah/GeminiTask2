@@ -1,14 +1,20 @@
 package com.gemini.block.geminitask.views.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +25,7 @@ import com.gemini.block.geminitask.model.New;
 import com.gemini.block.geminitask.service.NewsService;
 import com.gemini.block.geminitask.service.ServiceBuilder;
 import com.gemini.block.geminitask.utils.Constants;
+import com.gemini.block.geminitask.utils.Prefs;
 import com.gemini.block.geminitask.utils.Util;
 
 import java.util.HashMap;
@@ -34,6 +41,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private Unbinder unbinder;
     private Snackbar snackbar;
+    private String title;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.p)
@@ -50,13 +58,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setUpRecyclerView();
         unbinder = ButterKnife.bind(this);
+        Prefs prefs = new Prefs(MainActivity.this);
+        title = prefs.getTitle();
         if (Util.checkInternetConnection(this)) {
             tvNoInternet.setVisibility(View.GONE);
-            getNews();
+            getNews(title);
         } else {
             showSnackBar();
         }
-        getNews();
+        getNews(title);
 
     }
     private void showSnackBar() {
@@ -71,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                             p.setIndeterminate(true);
                             p.setVisibility(View.VISIBLE);
                             tvNoInternet.setVisibility(View.GONE);
-                            getNews();
+
+                            getNews(title);
                         } else {
                             showSnackBar();
                         }
@@ -80,9 +91,10 @@ public class MainActivity extends AppCompatActivity {
         snackbar.setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.snackBarActionTxtColor, null));
         snackbar.show();
     }
-    private void getNews(){
+
+    private void getNews(String title) {
         HashMap<String, String> filterMap = new HashMap<>();
-        filterMap.put("q", "bitcoin");
+        filterMap.put("q", title);
         filterMap.put("apiKey", Constants.token);
         NewsService newsService = ServiceBuilder.buildService(NewsService.class);
         Call<New> request = newsService.getNews(filterMap);
@@ -142,6 +154,59 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         p.setIndeterminate(true);
         Util.setFont(tvNoInternet, this, 0);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.change_title) {
+
+            showInputDialog();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showInputDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Change title");
+
+        final EditText titleInput = new EditText(MainActivity.this);
+        titleInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        titleInput.setHint("bitcoin");
+        builder.setView(titleInput);
+
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Prefs titlePreference = new Prefs(MainActivity.this);
+                titlePreference.setTitle(titleInput.getText().toString());
+
+                String title = titlePreference.getTitle();
+
+
+                //re-render everything again
+                getNews(title);
+
+            }
+        });
+        builder.show();
+
+
     }
 
     @Override

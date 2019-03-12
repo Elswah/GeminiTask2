@@ -2,7 +2,6 @@ package com.gemini.block.geminitask.views.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,9 +26,9 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void setUpReference() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         txt_source = (TextView) findViewById(R.id.txt_source);
         txt_author = (TextView) findViewById(R.id.txt_author);
         txt_title = (TextView) findViewById(R.id.txt_title);
