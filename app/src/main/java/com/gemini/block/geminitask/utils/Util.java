@@ -25,6 +25,7 @@ public class Util {
                 break;
         }
 
+
         textView.setTypeface(font);
     }
 

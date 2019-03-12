@@ -12,24 +12,9 @@ import com.gemini.block.geminitask.utils.RoundedCornersTransformation;
 import com.gemini.block.geminitask.utils.Util;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
-
 public class DetailsActivity extends AppCompatActivity {
-    @BindView(R.id.txt_source)
-    TextView txt_source;
-    @BindView(R.id.txt_outhor)
-    TextView txt_outhor;
-    @BindView(R.id.txt_title)
-    TextView txt_title;
-    @BindView(R.id.txt_content)
-    TextView txt_content;
-    @BindView(R.id.txt_data_author)
-    TextView txt_data_author;
-    @BindView(R.id.txt_data_title)
-    TextView txt_data_title;
-    @BindView(R.id.txt_data_content)
-    TextView txt_data_content;
-    @BindView(R.id.imgdetails)
+
+    TextView txt_source, txt_author, txt_title, txt_content, txt_data_author, txt_data_title, txt_data_content;
     ImageView imageView;
 
     @Override
@@ -37,6 +22,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         setUpReference();
+        getDataObject();
 
     }
 
@@ -44,10 +30,19 @@ public class DetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        txt_source = (TextView) findViewById(R.id.txt_source);
+        txt_author = (TextView) findViewById(R.id.txt_author);
+        txt_title = (TextView) findViewById(R.id.txt_title);
+        txt_content = (TextView) findViewById(R.id.txt_content);
+        txt_data_author = (TextView) findViewById(R.id.txt_data_author);
+        txt_data_title = (TextView) findViewById(R.id.txt_data_title);
+        txt_data_content = (TextView) findViewById(R.id.txt_data_content);
+        imageView = (ImageView) findViewById(R.id.detsBandImage);
+
         Util.setFont(txt_source, this, 0);
         Util.setFont(txt_content, this, 0);
         Util.setFont(txt_title, this, 0);
-        Util.setFont(txt_outhor, this, 0);
+        Util.setFont(txt_author, this, 0);
         Util.setFont(txt_data_author, this, 0);
         Util.setFont(txt_data_title, this, 0);
         Util.setFont(txt_data_content, this, 0);

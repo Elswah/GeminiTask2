@@ -95,14 +95,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_row_select:
-                    Timber.d("img_row_select ");
+                    // Timber.d("img_row_select ");
+                    Intent intent2 = new Intent(context, DetailsActivity.class);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putParcelable("currentitem", current);
+                    intent2.putExtras(bundle2);
+                    context.startActivity(intent2);
                     break;
 
                 case R.id.img_row:
-                    Timber.d("img_row ");
+                    //  Timber.d("img_row ");
+
                     break;
                 case R.id.layout:
-                    Timber.d("layout clicked ");
+                    //  Timber.d("layout clicked ");
                     Intent intent = new Intent(context, DetailsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("currentitem", current);
