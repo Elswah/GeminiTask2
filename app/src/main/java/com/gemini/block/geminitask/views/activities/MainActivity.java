@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             showSnackBar();
         }
-        getNews(title);
+        // getNews(title);
 
     }
     private void showSnackBar() {
@@ -78,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (Util.checkInternetConnection(getApplicationContext())) {
+                            recyclerView.setVisibility(View.VISIBLE);
                             p.setIndeterminate(true);
                             p.setVisibility(View.VISIBLE);
                             tvNoInternet.setVisibility(View.GONE);
+                            snackbar.dismiss();
 
                             getNews(title);
                         } else {
@@ -144,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     default:
                         Toast.makeText(this, "unknown error", Toast.LENGTH_SHORT).show();
+                        p.setIndeterminate(false);
+                        p.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     private void showInputDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Change title");
+        builder.setTitle("Change key word of Search");
 
         final EditText titleInput = new EditText(MainActivity.this);
         titleInput.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -206,8 +210,20 @@ public class MainActivity extends AppCompatActivity {
                 if (title.equals("") && title.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "enter your field correctly", Toast.LENGTH_SHORT).show();
                 } else {
-                    //re-render everything again
-                    getNews(title);
+                    if (Util.checkInternetConnection(getApplicationContext())) {
+                        //re-render everything again
+                        recyclerView.setVisibility(View.VISIBLE);
+                        tvNoInternet.setVisibility(View.GONE);
+                        ////////
+                        if (snackbar != null) {
+                            snackbar.dismiss();
+                        }
+
+                        getNews(title);
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        showSnackBar();
+                    }
                 }
 
             }
