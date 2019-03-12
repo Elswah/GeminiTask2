@@ -6,4 +6,5 @@
     <string name="no_internet_connection">NO Internet Connection !</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="change_title">change</string>
+    <string name="go_website">website</string>
 </resources>

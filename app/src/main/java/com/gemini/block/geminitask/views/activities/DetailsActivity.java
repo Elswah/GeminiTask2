@@ -1,9 +1,14 @@
 package com.gemini.block.geminitask.views.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gemini.block.geminitask.R;
 import com.gemini.block.geminitask.model.Article;
@@ -15,6 +20,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     TextView txt_source, txt_author, txt_title, txt_content, txt_data_author, txt_data_title, txt_data_content;
     ImageView imageView;
+    private Article article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
     private void getDataObject() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Article article = bundle.getParcelable("currentitem");
+            article = bundle.getParcelable("currentitem");
             setDataToView(article);
         }
     }
@@ -64,6 +70,37 @@ public class DetailsActivity extends AppCompatActivity {
         txt_data_content.setText(article.getContent());
         txt_data_title.setText(article.getTitle());
         txt_source.setText(article.getSource().getName());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity_event_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_websiteId) {
+
+            String url = article.getUrl();
+
+            if (!url.equals("")) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "Website not available", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
