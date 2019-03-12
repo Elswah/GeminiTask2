@@ -7,4 +7,5 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="change_title">change</string>
     <string name="go_website">website</string>
+    <string name="find">find</string>
 </resources>

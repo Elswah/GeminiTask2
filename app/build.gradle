@@ -41,4 +41,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    //cutom searchView
+    implementation 'com.github.leonardoxh:fake-search-view:0.3.1'
 }

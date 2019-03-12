@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,6 +29,7 @@ import com.gemini.block.geminitask.service.ServiceBuilder;
 import com.gemini.block.geminitask.utils.Constants;
 import com.gemini.block.geminitask.utils.Prefs;
 import com.gemini.block.geminitask.utils.Util;
+import com.github.leonardoxh.fakesearchview.FakeSearchView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +40,10 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FakeSearchView.OnSearchListener {
     private Unbinder unbinder;
     private Snackbar snackbar;
     private String title;
@@ -174,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.fake_search);
+        FakeSearchView fakeSearchView = (FakeSearchView) MenuItemCompat.getActionView(menuItem);
+        fakeSearchView.setOnSearchListener(this);
         return true;
     }
 
@@ -241,5 +247,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onSearch(FakeSearchView fakeSearchView, CharSequence constraint) {
+        Timber.d("user enter " + constraint);
+    }
+
+    @Override
+    public void onSearchHint(FakeSearchView fakeSearchView, CharSequence constraint) {
+
     }
 }
