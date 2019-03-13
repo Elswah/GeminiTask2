@@ -64,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void setDataToView(Article article) {
-        if (!article.getUrlToImage().isEmpty() && article.getUrlToImage() != null && !article.getUrlToImage().equals("")) {
+        if (article.getUrlToImage() != null && !article.getUrlToImage().equals("")) {
             Picasso.with(getApplicationContext()).load(article.getUrlToImage()).centerCrop().
                     fit().error(R.drawable.error).placeholder(R.drawable.placeholder).
                     transform(new RoundedCornersTransformation(22, 0)).into(imageView);

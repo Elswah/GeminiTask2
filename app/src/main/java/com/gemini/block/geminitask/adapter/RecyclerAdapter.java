@@ -77,7 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         public void setData(Article current, int position) {
             this.title.setText(current.getAuthor());
             this.description.setText(current.getSource().getName());
-            if (!current.getUrlToImage().isEmpty() && current.getUrlToImage() != null && !current.getUrlToImage().equals("")) {
+            if (current.getUrlToImage() != null && !current.getUrlToImage().equals("")) {
                 Picasso.with(context).load(current.getUrlToImage()).error(R.drawable.error)
                         .placeholder(R.drawable.placeholder).transform(new RoundedCornersTransformation(22, 0))
                         .fit().centerCrop().into(this.imgHeader);

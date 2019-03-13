@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, "server broken", Toast.LENGTH_SHORT).show();
                         break;
                     default:
-                        Toast.makeText(this, "unknown error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "search with another key word", Toast.LENGTH_SHORT).show();
                         p.setIndeterminate(false);
                         p.setVisibility(View.GONE);
                         // showSnackBar();
