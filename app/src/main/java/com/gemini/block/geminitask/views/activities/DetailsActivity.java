@@ -1,5 +1,6 @@
 package com.gemini.block.geminitask.views.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -99,8 +100,42 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
         }
+        if (id == R.id.share) {
+            shareNew();
+
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void shareNew() {
+
+        StringBuilder dataString = new StringBuilder();
+
+        String author = article.getAuthor();
+        String title = article.getTitle();
+        String source = article.getSource().getName();
+        String url = article.getUrl();
+
+        dataString.append(" author: " + author + "\n");
+        dataString.append(" title: " + title + "\n");
+        dataString.append(" source: " + source + "\n");
+        dataString.append(" Url to read full article: " + url);
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Read his Article About" + title);
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"recipient@example.com"});
+        i.putExtra(Intent.EXTRA_TEXT, dataString.toString());
+
+        try {
+
+            startActivity(Intent.createChooser(i, "Send mail..."));
+
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Please install email client before sending",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 }

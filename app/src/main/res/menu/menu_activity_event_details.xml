@@ -4,7 +4,12 @@
     tools:context="musicevent.magadistudio.com.musicevent.ActivityEventDetails">
     <item
         android:id="@+id/action_websiteId"
-        android:icon="@drawable/ic_action_web_site"
+        android:icon="@drawable/ic_web"
         android:title="@string/go_website"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share"
         app:showAsAction="always" />
 </menu>

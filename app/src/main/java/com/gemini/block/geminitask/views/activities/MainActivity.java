@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements FakeSearchView.On
     @Override
     public void onSearch(FakeSearchView fakeSearchView, CharSequence constraint) {
         Timber.d("user enter " + constraint);
+
     }
 
     @Override
