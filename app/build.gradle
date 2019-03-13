@@ -42,5 +42,5 @@ dependencies {
     // picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //cutom searchView
-    implementation 'com.github.leonardoxh:fake-search-view:0.3.1'
+   // implementation 'com.github.leonardoxh:fake-search-view:0.3.1'
 }

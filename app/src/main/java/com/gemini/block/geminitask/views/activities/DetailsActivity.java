@@ -64,9 +64,15 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void setDataToView(Article article) {
-        Picasso.with(getApplicationContext()).load(article.getUrlToImage()).centerCrop().
-                fit().error(R.drawable.error).placeholder(R.drawable.placeholder).
-                transform(new RoundedCornersTransformation(22, 0)).into(imageView);
+        if (!article.getUrlToImage().isEmpty() && article.getUrlToImage() != null && !article.getUrlToImage().equals("")) {
+            Picasso.with(getApplicationContext()).load(article.getUrlToImage()).centerCrop().
+                    fit().error(R.drawable.error).placeholder(R.drawable.placeholder).
+                    transform(new RoundedCornersTransformation(22, 0)).into(imageView);
+        } else {
+            Picasso.with(getApplicationContext()).load(R.drawable.placeholder).centerCrop().
+                    fit().error(R.drawable.error).placeholder(R.drawable.placeholder).
+                    transform(new RoundedCornersTransformation(22, 0)).into(imageView);
+        }
         txt_data_author.setText(article.getAuthor());
         txt_data_content.setText(article.getContent());
         txt_data_title.setText(article.getTitle());
