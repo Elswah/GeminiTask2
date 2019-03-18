@@ -28,9 +28,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private Context context;
 
     public RecyclerAdapter(Context context, List<Article> data) {
-        this.context=context;
+        this.context = context;
         inflater = LayoutInflater.from(context);
         this.mData = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         //Log.i(TAG, "onBindViewHolder" + position);
-        Timber.d("onBindViewHolder %d",position);
+        Timber.d("onBindViewHolder %d", position);
         Article current = mData.get(position);
         holder.setData(current, position);
         holder.setListeners();
@@ -56,9 +57,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
 
-
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView title,description;
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView title, description;
         ImageView imgHeader, imgSelect;
         LinearLayout linearLayout;
         int position;
@@ -66,10 +66,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            title       = (TextView)  itemView.findViewById(R.id.tvTitle);
-            description = (TextView)  itemView.findViewById(R.id.tvDescription);
-            imgHeader   = (ImageView) itemView.findViewById(R.id.img_row);
-            imgSelect   = (ImageView) itemView.findViewById(R.id.img_row_select);
+            title = (TextView) itemView.findViewById(R.id.tvTitle);
+            description = (TextView) itemView.findViewById(R.id.tvDescription);
+            imgHeader = (ImageView) itemView.findViewById(R.id.img_row);
+            imgSelect = (ImageView) itemView.findViewById(R.id.img_row_select);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.layout);
 
         }
@@ -89,11 +89,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.position = position;
             this.current = current;
         }
+
         public void setListeners() {
             imgSelect.setOnClickListener(MyViewHolder.this);
             imgHeader.setOnClickListener(MyViewHolder.this);
             linearLayout.setOnClickListener(this);
-
 
         }
 
@@ -122,7 +122,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     context.startActivity(intent);
                     break;
             }
-         //   Log.i("onClick after operation", mData.size() + " \n\n" + mData.toString());
+
         }
     }
 }

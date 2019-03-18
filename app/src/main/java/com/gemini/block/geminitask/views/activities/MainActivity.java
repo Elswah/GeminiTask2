@@ -38,6 +38,7 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -121,6 +122,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Timber.d("pause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Timber.d("pause");
+    }
+
     private void handleResponse(Response<New> response){
         if(response!=null ) {
             if(response.isSuccessful()) {
@@ -128,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     articlesList = (ArrayList<Article>) response.body().getArticles();
                     RecyclerAdapter adapter = new RecyclerAdapter(getApplicationContext(), articlesList);
                     recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                     p.setIndeterminate(false);
                     p.setVisibility(View.GONE);
                 }else {
